@@ -1,47 +1,26 @@
-import { useForm } from 'react-hook-form'
-import {
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
-  Input,
-  Button,
-} from '@chakra-ui/react'
+import React, { useState } from 'react';
+import Form from "@rjsf/chakra-ui";
+import step1schema from "../schema/page1.json";
+import step2schema from "../schema/page2.json";
 
-export default function Form() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm()
+export default function HookForm() {
+  const [formData, setFormData] = useState();
+  const [step, setStep] = useState(1);
 
-  function onSubmit(values) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2))
-        resolve()
-      }, 3000)
-    })
+  const onSubmit = ({formData}) => {
+  	if (step === 1) {
+      setFormData(formData)
+      console.log(formData);
+      setStep(2);
+    } else {
+      alert("You submitted " + JSON.stringify(formData, null, 2));
+    }
   }
-
+  
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={errors.name}>
-        <FormLabel htmlFor='name'>First name</FormLabel>
-        <Input
-          id='name'
-          placeholder='name'
-          {...register('name', {
-            required: 'This is required',
-            minLength: { value: 4, message: 'Minimum length should be 4' },
-          })}
-        />
-        <FormErrorMessage>
-          {errors.name && errors.name.message}
-        </FormErrorMessage>
-      </FormControl>
-      <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
-        Submit
-      </Button>
-    </form>
+    <Form schema={step === 1 ? step1schema : step2schema}
+          onSubmit={onSubmit}
+          formData={formData}
+    />  
   )
 }

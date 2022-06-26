@@ -1,0 +1,8 @@
+{
+  "title": "Step 2",
+  "type": "object",
+  "required": ["age"],
+  "properties": {
+    "age": {"type": "integer"}
+  }
+}

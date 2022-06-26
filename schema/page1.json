@@ -1,0 +1,8 @@
+{
+  "title": "Step 1",
+  "type": "object",
+  "required": ["name"],
+  "properties": {
+  	"name": {"type": "string", "minLength": 3}
+  }
+}
